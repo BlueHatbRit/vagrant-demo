@@ -1,0 +1,18 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    # Box
+    config.vm.box = "ubuntu/trusty64"
+
+    # Shared folders
+    config.vm.synced_folder "./www", "/var/www"
+    config.vm.synced_folder "./configs", "/home/vagrant/configs"
+
+    # Networking
+    config.vm.network "forwarded_port", guest: 80, host: 8931
+
+    # Shell provisioning
+    config.vm.provision "shell" do |s|
+    	s.path = "provision.sh"
+    end
+end
